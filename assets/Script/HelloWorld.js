@@ -108,18 +108,44 @@ playerId:0,
     // use this for initialization
     onLoad: function () {
        this.label.string =  "load";
+    
+        var canvas = cc.find('Canvas');
+        canvas.on(cc.Node.EventType.TOUCH_START, this.onTouchBegan, this);
+    },
+
+    onTouchBegan: function (event) {
+        //var touchLoc = event.touch.getLocation();
+        // var scene = cc.director.getScene();
+        // var bullet = cc.instantiate(this.bullet);
+        // bullet.position = touchLoc;
+        // bullet.active = true;
+        // scene.addChild(bullet);
+
+
+
+        var worldPos =   event.touch.getLocation(); 
+        var bulletPoint = Game.BulletManager.node.convertToNodeSpaceAR(worldPos);
+        var bulletNode  = Game.BulletManager.getBullet();
+        bulletNode.rotation = 45;
+        var bullet = bulletNode.getComponent("bullet");
+
+        bullet.init("123", GLB.NormalBulletSpeed);
+
+
+
     },
 
 
-   fire: function    () {
+   fire: function    (event) {
+
         var bulletNode = Game.BulletManager.getBullet();
 
        // var worldPos = this.firePoint.convertToWorldSpaceAR(cc.v2(0, 0));
        // var bulletPoint = Game.BulletManager.node.convertToNodeSpaceAR(worldPos);
-
-
-        var worldPos = (cc.v2(0, 0));
-        var bulletPoint = (cc.v2(50, 50));
+        //var bulletPoint = (cc.v2(50, 50));
+        var worldPos =   event.touch.getLocation(); (cc.v2(0, 0));
+        var bulletPoint = Game.BulletManager.node.convertToNodeSpaceAR(worldPos);
+        bulletNode.rotation = 90;
 
         // bulletNode.position = bulletPoint;
         // if (GLB.userInfo.id === this.playerId) {
@@ -128,7 +154,6 @@ playerId:0,
         //     bulletNode.rotation = 180;
         // }
 
-        bulletNode.rotation = 180;
         var bullet = bulletNode.getComponent("bullet");
         // if (this.playerId === GLB.userInfo.id) {
         //     bullet.init(this.playerId, GLB.NormalBulletSpeed);

@@ -67,5 +67,6 @@ cc.Class({
 
     update(dt) {
         this.node.y = this.node.y + (this.speed * dt);
+        this.node.x = this.node.x + (this.speed * dt);
     }
 });
