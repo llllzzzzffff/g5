@@ -72,9 +72,33 @@ var bbbb = cc.Class({
         target: cc.Node,
         frames: [cc.SpriteFrame],
 
+        speed: 0,
+        firePoint: cc.Node,
+        hearts: [cc.Node],
+        slatePoint: cc.Node,
+        heart: 3,
+        fireClip: {
+            default: null,
+            url: cc.AudioClip
+        },
+        hurtClip: {
+            default: null,
+            url: cc.AudioClip
+        },
+        deadClip: {
+            default: null,
+            url: cc.AudioClip
+        },
+        tankBoom: {
+            default: null,
+            type: cc.Prefab
+        },
+        hurtBoom: {
+            default: null,
+            type: cc.Prefab
+        },
 
-
-
+playerId:0,
         // defaults, set visually when attaching this script to the Canvas
         text: 'Hello, World!'
     },
@@ -87,8 +111,45 @@ var bbbb = cc.Class({
     },
 
 
+   fire: function    () {
+        var bulletNode = Game.BulletManager.getBullet();
+
+       // var worldPos = this.firePoint.convertToWorldSpaceAR(cc.v2(0, 0));
+       // var bulletPoint = Game.BulletManager.node.convertToNodeSpaceAR(worldPos);
+
+
+        var worldPos = (cc.v2(0, 0));
+        var bulletPoint = (cc.v2(50, 50));
+
+        // bulletNode.position = bulletPoint;
+        // if (GLB.userInfo.id === this.playerId) {
+        //     bulletNode.rotation = 0;
+        // } else {
+        //     bulletNode.rotation = 180;
+        // }
+
+        bulletNode.rotation = 180;
+        var bullet = bulletNode.getComponent("bullet");
+        // if (this.playerId === GLB.userInfo.id) {
+        //     bullet.init(this.playerId, GLB.NormalBulletSpeed);
+        // } else {
+        //     bullet.init(this.playerId, -GLB.NormalBulletSpeed);
+        // }
+
+        bullet.init("123", -GLB.NormalBulletSpeed);
+
+        //cc.audioEngine.play(this.fireClip, false, 1);
+    },
+
+
 
         start: function () {
+
+
+    cc.log("will fire: ");
+
+             this.fire();
+    cc.log("end fire ");
 
 var  child =this.node.getChildByName("player3");
         	cc.log("getChildByName, player3: ",ccf);
