@@ -1,0 +1,34 @@
+{
+  "ver": "2.3.3",
+  "uuid": "45b58340-804e-4f0f-8627-e73f4eb4a9db",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "platformSettings": {},
+  "subMetas": {
+    "赌场": {
+      "ver": "1.0.4",
+      "uuid": "25fadd7f-cc9d-4f36-bede-af3fd81e24b7",
+      "rawTextureUuid": "45b58340-804e-4f0f-8627-e73f4eb4a9db",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 450,
+      "height": 679,
+      "rawWidth": 450,
+      "rawHeight": 679,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

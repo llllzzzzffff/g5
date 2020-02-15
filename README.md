@@ -1,2 +1,2 @@
-# g5
-555
+# hello-world
+Hello world new project template.
