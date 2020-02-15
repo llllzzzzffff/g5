@@ -161,7 +161,7 @@ playerId:0,
         //     bullet.init(this.playerId, -GLB.NormalBulletSpeed);
         // }
 
-        bullet.init("123", -GLB.NormalBulletSpeed);
+    //    bullet.init("123", -GLB.NormalBulletSpeed);
 
         //cc.audioEngine.play(this.fireClip, false, 1);
     },
@@ -170,10 +170,13 @@ playerId:0,
 
         start: function () {
 
+    
+ return;
+
 
     cc.log("will fire: ");
 
-             this.fire();
+    this.fire();
     cc.log("end fire ");
 
 var  child =this.node.getChildByName("player3");
@@ -232,13 +235,15 @@ var  child =this.node.getChildByName("player3");
     test1: function () {
 
 
+                        Game.PlayerManager.self.fire();
+
+                        Game.PlayerManager.rival.fire();
 
         
+        return;
+
+
         cc.log("-----------------------------2 Node.getComponentInChildren");
-          
-        //let searchNode = cc.find("Canvas/SearchNode"); //通过全路径获取对应节点
-        //let scriptComponent = searchNode.getComponent("Search"); //通过脚本类名Search获取组件
-        //let scriptComponent = searchNode.getComponent(cc.Component);
 
         var label1 = cc.find("Canvas/info");      
         cc.log("cc.find:",label1);
@@ -247,16 +252,8 @@ var  child =this.node.getChildByName("player3");
         label1.Angle = -90 ;
 
         return;
-       // this.active = false;
-        //this.label.string = this.score;
-       
-         //this.info.string = " ";
+
         this.infoScript.string = " ";
-        //this.info.string = " ";
-
-
-
-
         cc.log("this 的类型是否为当前组件var = bbbb的别名:", this instanceof bbbb);
         //cc.log("this 的类型是否为当前组件var = bbbb的别名:", this instanceof HelloWorld);
         cc.log(this);
@@ -277,11 +274,71 @@ var  child =this.node.getChildByName("player3");
         4:cc_Node {_name: "New Button",}
         length:5
         */
+    },
 
 
 
 
 
+    frameUpdate: function(rsp) {
+        if (rsp.frameItems) {
+            for (var i = 0; i < rsp.frameItems.length; i++) {
+                if (Game.GameManager.gameState === GameState.Over) {
+                    return;
+                }
+                var info = rsp.frameItems[i];
+                var cpProto = JSON.parse(info.cpProto);
+                if (info.cpProto.indexOf(GLB.DIRECTION) >= 0) {
+                    if (GLB.userInfo.id === info.srcUserID) {
+                        Game.PlayerManager.self.setDirect(cpProto.direction);
+                    } else {
+                        Game.PlayerManager.rival.setDirect(cpProto.direction);
+                    }
+                }
+                if (info.cpProto.indexOf(GLB.FIRE) >= 0) {
+                    if (GLB.userInfo.id === info.srcUserID) {
+                        Game.PlayerManager.self.fire();
+                    } else {
+                        Game.PlayerManager.rival.fire();
+                    }
+                }
+
+                if (info.cpProto.indexOf(GLB.HURT) >= 0) {
+                    if (GLB.userInfo.id === cpProto.playerId) {
+                        Game.PlayerManager.self.hurt();
+                    } else {
+                        Game.PlayerManager.rival.hurt();
+                    }
+                }
+                if (info.cpProto.indexOf(GLB.SHOOT_GUN_ITEM) >= 0) {
+                    Game.ItemManager.itemSpawn(cpProto.itemId);
+                }
+                if (info.cpProto.indexOf(GLB.ITEM_GET) >= 0) {
+                    Game.ItemManager.itemGet(cpProto.itemId, cpProto.playerId);
+                }
+                if (info.cpProto.indexOf(GLB.SPAWN_SLATE) >= 0) {
+                    Game.SlateManager.spawnSlate(info.srcUserID);
+                }
+
+                if (info.cpProto.indexOf(GLB.SLATE_HITTING) >= 0) {
+                    Game.SlateManager.hitSlate(cpProto.slateId);
+                }
+            }
+        }
+        if (Game.GameManager.gameState === GameState.Over) {
+            return;
+        }
+        if (Game.PlayerManager) {
+            if (Game.PlayerManager.self) {
+                Game.PlayerManager.self.move();
+            }
+            if (Game.PlayerManager.rival) {
+                Game.PlayerManager.rival.move();
+            }
+        }
+        if (Game.ItemManager) {
+            Game.ItemManager.move();
+        }
     },
 
 
